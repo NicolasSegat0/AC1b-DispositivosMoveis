@@ -42,22 +42,22 @@ public class DetailsActivity extends AppCompatActivity {
         buttonMap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                
+                // Receber as coordenadas do Intent
                 double latitude = getIntent().getDoubleExtra("latitude", 0);
                 double longitude = getIntent().getDoubleExtra("longitude", 0);
 
+                // Construa o URI do Google Maps
+                Uri gmmIntentUri = Uri.parse("https://www.google.com/maps/search/?api=1&query=" + latitude + "," + longitude);
 
-                Uri gmmIntentUri = Uri.parse("geo:" + latitude + "," + longitude);
-
-
+                // Crie um intent para abrir o mapa no navegador
                 Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
-                mapIntent.setPackage("com.google.android.apps.maps"); // Use o Google Maps
                 if (mapIntent.resolveActivity(getPackageManager()) != null) {
                     startActivity(mapIntent);
                 } else {
-                    Toast.makeText(getApplicationContext(), "Google Maps não está instalado no dispositivo.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Nenhum navegador da web encontrado.", Toast.LENGTH_SHORT).show();
                 }
             }
+
         });
 
         buttonWebsite.setOnClickListener(new View.OnClickListener() {
